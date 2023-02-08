@@ -1,0 +1,99 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model Users {
+  id String @id @default(uuid())
+
+  ip String
+
+  nome String
+
+  email String @unique
+
+  senha String
+
+  cpf String
+
+  telefone String?
+
+  isActive Boolean?
+
+  isVerify Boolean?
+
+  sessions UserSessions[]
+
+  projetos UserProjects[]
+
+  cep String
+
+  cidade String
+
+  bairro String
+
+  endereco String
+
+  numero String
+
+  complemento String
+
+  @@map("users")
+}
+
+model UserSessions {
+  id String @id @default(uuid())
+
+  ip String?
+
+  type String?
+
+  createdAt DateTime @default(now())
+
+  user Users @relation(fields: [UserId], references: [id], onDelete: Cascade)
+  UserId String
+
+  @@map("user_sessions")
+}
+
+model UserProjects {
+  id String @id @default(uuid())
+
+  ip String
+
+  nome String?
+
+  cep String?
+
+  estado String?
+
+  cidade String?
+
+  bairro String?
+
+  endereco String?
+
+  telefone String?
+
+  numero String?
+
+  complemento String?
+
+  concessionaria String?
+
+  potenciaDoProjeto String
+
+  pdf String?
+
+  user Users @relation(fields: [UserId], references: [id], onDelete: Cascade)
+  UserId String
+
+  @@map("projects")
+}
