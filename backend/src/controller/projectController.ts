@@ -97,8 +97,7 @@ class projectController {
   }
 
   async readPerState(req: Request, res: Response) {
-    const { estado }: IReadPerStateProject = req.body;
-
+    const estado = req.body.estado;
     const data = await projectService.readPerState(estado);
 
     return res.status(200).json({

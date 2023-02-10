@@ -82,7 +82,7 @@ class projectService {
     return allProjects;
   }
 
-  async readPerState({ estado }: any) {
+  async readPerState( estado: any) {
     const stateProjects =
       await prismaConnect.projects.findMany({
         where: {
