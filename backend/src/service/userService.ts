@@ -27,16 +27,48 @@ class userService {
     numero,
     complemento,
   }: IUserCreate) {
-    const findUserEmail =
+    const verifyUserEmail =
       await prismaConnect.users.findUnique({
         where: { email },
       });
 
-    if (findUserEmail) {
+    if (verifyUserEmail) {
       throw new ConflitError(
         'this email is already registered'
       );
     }
+
+    const verifyUserCpf =
+      await prismaConnect.users.findUnique({
+        where: { cpf },
+      });
+
+    if (verifyUserCpf) {
+      throw new ConflitError(
+        'this cpf is already registered'
+      );
+    }
+
+    const formatedCPF = `${cpf.substring(
+      0,
+      3
+    )}.${cpf.substring(3, 6)}.${cpf.substring(
+      6,
+      9
+    )}-${cpf.substring(9, 11)}`;
+
+    const formatedTelefone = `(${telefone.substring(
+      0,
+      2
+    )}) ${telefone[2]} ${telefone.substring(
+      3,
+      7
+    )}-${telefone.substring(7, 11)}`;
+
+    const formatedCEP = `${cep.substring(
+      0,
+      5
+    )}-${cep.substring(5, 8)}`;
 
     const hashedSenha = await hash(senha.toString(), 10);
 
@@ -46,14 +78,15 @@ class userService {
         nome,
         email,
         senha: hashedSenha,
-        cpf,
-        telefone,
-        cep,
+        cpf: formatedCPF,
+        telefone: formatedTelefone,
+        cep: formatedCEP,
         cidade,
         bairro,
         endereco,
         numero,
         complemento,
+        isActive: true,
       },
     });
 
@@ -86,7 +119,7 @@ class userService {
   }
 
   async update({
-    id,
+    userId,
     nome,
     email,
     senha,
@@ -99,6 +132,7 @@ class userService {
     numero,
     complemento,
   }: IUserEdit) {
+    const id = userId;
     const updateUser = await prismaConnect.users.update({
       where: {
         id,
@@ -122,6 +156,14 @@ class userService {
   }
 
   async delete({ userId }: IUserDelete) {
+    const user = await prismaConnect.users.findUnique({
+      where: { id: userId },
+    });
+
+    if (!user?.isActive) {
+      throw new NotFoundError('User not found.');
+    }
+
     await prismaConnect.users.update({
       where: {
         id: userId,

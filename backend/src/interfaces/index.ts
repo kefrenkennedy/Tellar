@@ -14,7 +14,7 @@ export interface IUserCreate {
 }
 
 export interface IUserEdit {
-  id?: string;
+  userId?: string;
   nome?: string;
   email?: string;
   senha?: string;
@@ -27,7 +27,6 @@ export interface IUserEdit {
   numero?: string;
   complemento?: string;
   isActive?: boolean;
-  isVerify?: boolean;
 }
 
 export interface IUserDelete {
@@ -43,7 +42,7 @@ export interface IProjectCreate {
   ip: string;
   UserId: string;
   estado: string;
-  nome: string;
+  cliente: string;
   cep: string;
   cidade: string;
   bairro: string;
@@ -52,15 +51,19 @@ export interface IProjectCreate {
   numero: string;
   complemento: string;
   concessionaria: string;
-  potenciaDoProjeto: string;
+  potencia: string;
   pdf: string;
+}
+
+export interface IReadPerStateProject {
+  estado: string;
 }
 
 export interface IProjectEdit {
   id?: string;
   userId?: string;
   estado?: string;
-  nome?: string;
+  cliente?: string;
   cep?: string;
   cidade?: string;
   bairro?: string;
@@ -69,10 +72,10 @@ export interface IProjectEdit {
   numero?: string;
   complemento?: string;
   concessionaria?: string;
-  potenciaDoProjeto?: string;
+  potencia?: string;
   pdf?: string;
 }
 
 export interface IProjectDelete {
-  id: string;
+  pdf: string;
 }

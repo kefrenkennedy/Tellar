@@ -3,12 +3,12 @@ import authService from '../service/authService';
 
 class authController {
   async login(req: Request, res: Response) {
-    const { email, password } = req.body;
+    const { email, senha } = req.body;
     const ip = req.ip;
 
     const token = await authService.login(
       email,
-      password,
+      senha,
       ip
     );
 

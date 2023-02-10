@@ -3,6 +3,7 @@ import { Request, Response } from 'express';
 import {
   IProjectCreate,
   IProjectEdit,
+  IReadPerStateProject,
 } from '../interfaces/index';
 import projectService from '../service/projectService';
 
@@ -11,7 +12,7 @@ class projectController {
     const {
       UserId,
       estado,
-      nome,
+      cliente,
       cep,
       cidade,
       bairro,
@@ -20,7 +21,7 @@ class projectController {
       numero,
       complemento,
       concessionaria,
-      potenciaDoProjeto,
+      potencia,
       pdf,
     }: IProjectCreate = req.body;
 
@@ -30,7 +31,7 @@ class projectController {
       ip,
       UserId,
       estado,
-      nome,
+      cliente,
       cep,
       cidade,
       bairro,
@@ -39,7 +40,7 @@ class projectController {
       numero,
       complemento,
       concessionaria,
-      potenciaDoProjeto,
+      potencia,
       pdf,
     });
 
@@ -52,7 +53,7 @@ class projectController {
     const {
       userId,
       estado,
-      nome,
+      cliente,
       cep,
       cidade,
       bairro,
@@ -61,13 +62,14 @@ class projectController {
       numero,
       complemento,
       concessionaria,
-      potenciaDoProjeto,
+      potencia,
       pdf,
     }: IProjectEdit = req.body;
 
     const data = await projectService.update({
       userId,
-      nome,
+      cliente,
+      estado,
       cep,
       cidade,
       bairro,
@@ -76,7 +78,7 @@ class projectController {
       numero,
       complemento,
       concessionaria,
-      potenciaDoProjeto,
+      potencia,
       pdf,
     });
 
@@ -93,10 +95,20 @@ class projectController {
     });
   }
 
-  async delete(req: Request, res: Response) {
-    const { id } = req.project;
+  async readPerState(req: Request, res: Response) {
+    const { estado }: IReadPerStateProject = req.body;
 
-    await projectService.delete({ id });
+    const data = await projectService.readPerState(estado);
+
+    return res.status(200).json({
+      data: data,
+    });
+  }
+
+  async delete(req: Request, res: Response) {
+    const { pdf }: any = req.body;
+
+    await projectService.delete({ pdf });
 
     return res
       .status(200)

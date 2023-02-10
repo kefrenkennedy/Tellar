@@ -9,7 +9,7 @@ class AuthService {
       where: { email },
     });
 
-    if (!findUser) {
+    if (!findUser || !findUser.isActive) {
       throw new UnauthorizedError('Invalid credentials');
     }
 

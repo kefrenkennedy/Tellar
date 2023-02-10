@@ -41,7 +41,7 @@ class userController {
     });
 
     return res.status(201).json({
-      data: excludeResponseMiddleware(data, ['password']),
+      data: excludeResponseMiddleware(data, ['senha']),
     });
   }
 
@@ -60,9 +60,10 @@ class userController {
       complemento,
     }: IUserEdit = req.body;
 
-    const { id } = req.user;
+    const userId = req.user.id;
 
     const data = await userService.update({
+      userId,
       nome,
       email,
       senha,
@@ -77,7 +78,10 @@ class userController {
     });
 
     return res.status(200).json({
-      data: excludeResponseMiddleware(data, ['password']),
+      data: excludeResponseMiddleware(data, [
+        'senha',
+        'isActive',
+      ]),
     });
   }
 
@@ -85,7 +89,7 @@ class userController {
     const data = await userService.readAll();
 
     return res.status(200).json({
-      data: excludeResponseMiddleware(data, ['password']),
+      data: excludeResponseMiddleware(data, ['senha']),
     });
   }
 

@@ -13,25 +13,13 @@ datasource db {
 model Users {
   id String @id @default(uuid())
 
-  ip String
+  cpf String @unique
 
   nome String
 
   email String @unique
 
-  senha String
-
-  cpf String
-
-  telefone String?
-
-  isActive Boolean?
-
-  isVerify Boolean?
-
-  sessions UserSessions[]
-
-  projetos UserProjects[]
+  telefone String
 
   cep String
 
@@ -45,13 +33,21 @@ model Users {
 
   complemento String
 
+  senha String
+
+  isActive Boolean
+
+  ip String
+
+  userSessions UserSessions[]
+
   @@map("users")
 }
 
 model UserSessions {
   id String @id @default(uuid())
 
-  ip String?
+  ip String
 
   type String?
 
@@ -63,37 +59,34 @@ model UserSessions {
   @@map("user_sessions")
 }
 
-model UserProjects {
+model Projects {
   id String @id @default(uuid())
 
   ip String
 
-  nome String?
+  estado String
 
-  cep String?
+  cep String
 
-  estado String?
+  cidade String
 
-  cidade String?
+  bairro String
 
-  bairro String?
+  endereco String
 
-  endereco String?
+  numero String
 
-  telefone String?
+  complemento String
 
-  numero String?
+  concessionaria String
 
-  complemento String?
+  potencia String
 
-  concessionaria String?
+  pdf String @unique
 
-  potenciaDoProjeto String
+  cliente String
 
-  pdf String?
-
-  user Users @relation(fields: [UserId], references: [id], onDelete: Cascade)
-  UserId String
+  telefone String
 
   @@map("projects")
 }

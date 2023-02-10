@@ -35,7 +35,7 @@ class App {
   }
 
   async routes() {
-    this.server.use('/auth', authRotes);
+    this.server.use('/login', authRotes);
     this.server.use('/user', userRoutes);
     this.server.use('/project', projectRoutes);
     this.server.use(errorMiddleware);
