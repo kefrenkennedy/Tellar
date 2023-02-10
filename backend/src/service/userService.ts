@@ -133,6 +133,7 @@ class userService {
     complemento,
   }: IUserEdit) {
     const id = userId;
+
     const updateUser = await prismaConnect.users.update({
       where: {
         id,

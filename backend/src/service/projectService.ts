@@ -101,6 +101,7 @@ class projectService {
     cliente,
     cep,
     cidade,
+    estado,
     bairro,
     endereco,
     telefone,
@@ -110,13 +111,14 @@ class projectService {
     potencia,
     pdf,
   }: IProjectEdit) {
-    const updateProject =
+    const updatedProject =
       await prismaConnect.projects.update({
         where: {
           id,
         },
         data: {
           cliente,
+          estado,
           cep,
           cidade,
           bairro,
@@ -130,7 +132,7 @@ class projectService {
         },
       });
 
-    return { updateProject };
+    return { updatedProject };
   }
 
   async delete({ pdf }: IProjectDelete) {

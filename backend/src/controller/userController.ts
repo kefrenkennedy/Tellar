@@ -46,6 +46,7 @@ class userController {
   }
 
   async update(req: Request, res: Response) {
+
     const {
       nome,
       email,

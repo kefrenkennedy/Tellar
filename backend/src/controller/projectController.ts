@@ -50,8 +50,9 @@ class projectController {
   }
 
   async update(req: Request, res: Response) {
+
     const {
-      userId,
+      id,
       estado,
       cliente,
       cep,
@@ -67,7 +68,7 @@ class projectController {
     }: IProjectEdit = req.body;
 
     const data = await projectService.update({
-      userId,
+      id,
       cliente,
       estado,
       cep,

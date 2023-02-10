@@ -168,7 +168,7 @@ projectRoutes.patch(
         'Telefone deve ser uma string de 11 números.'
       ),
   ],
-  (req: Request, res: Response) => {
+  (req: Request, res: Response, next: NextFunction) => {
     const errors = validationResult(req);
 
     const response: any = [];
@@ -182,6 +182,7 @@ projectRoutes.patch(
     if (!errors.isEmpty()) {
       return res.status(400).json({ errors: response });
     }
+    next()
   },
   projectController.update
 );
