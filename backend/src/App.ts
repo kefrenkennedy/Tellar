@@ -7,11 +7,6 @@ import userRoutes from './routes/userRoutes';
 import authRotes from './routes/authRoutes';
 import projectRoutes from './routes/projectRoutes';
 
-// const multipart = require('connect-multiparty');
-// const multipartMiddleware = multipart({
-//   maxFieldsSize: 20 * 1024 * 1024,
-// });
-
 class App {
   server: any;
   constructor() {
